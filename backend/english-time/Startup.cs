@@ -26,6 +26,14 @@ namespace english_time
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSwaggerGen(sw =>
+            {
+                sw.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
+                {
+                    Title = "English Time",
+                    Version = "v1"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +48,11 @@ namespace english_time
                 app.UseHsts();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(sw =>
+            {
+                sw.SwaggerEndpoint("/swagger/v1/swagger.json", "English  Time");
+            });
             app.UseHttpsRedirection();
             app.UseMvc();
         }
